@@ -4,7 +4,8 @@ import Titles from "./components/Titles";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
 
-const API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
+const OWM_API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
+const DS_API_KEY = "8ab5029215af5808294a32fdcd69c9f6";
 
 export class App extends Component {
     state = {
@@ -27,7 +28,7 @@ export class App extends Component {
                 lat = position.coords.latitude;
 
                 const proxy = "https://cors-anywhere.herokuapp.com/";
-                const api = `${proxy}https://api.darksky.net/forecast/8ab5029215af5808294a32fdcd69c9f6/${lat},${long}`;
+                const api = `${proxy}https://api.darksky.net/forecast/${DS_API_KEY}/${lat},${long}`;
                 fetch(api)
                     .then(response => {
                         return response.json();
@@ -64,6 +65,10 @@ export class App extends Component {
                             });
                     });
             });
+        } else {
+            this.setState(() => ({
+                error: "Please enter the values"
+            }));
         }
     }
 
@@ -73,7 +78,7 @@ export class App extends Component {
         const city = e.target.elements.city.value;
         const country = e.target.elements.country.value;
         const api_call = await fetch(
-            `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`
+            `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${OWM_API_KEY}&units=metric`
         );
         const data = await api_call.json();
 
