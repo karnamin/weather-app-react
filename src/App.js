@@ -33,13 +33,27 @@ export class App extends Component {
                         return response.json();
                     })
                     .then(data => {
-                        const { temperature, summary } = data.currently;
-                        this.setState(() => ({
-                            temperature: temperature,
-                            city: data.timezone,
-                            description: summary,
-                            error: ""
-                        }));
+                        const location_api = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=29e9b0cddcf745079971e7e87bc3cc21`;
+                        fetch(location_api)
+                            .then(response => {
+                                return response.json();
+                            })
+                            .then(location_data => {
+                                console.log(location_data);
+                                const {
+                                    city,
+                                    country
+                                } = location_data.results[0].components;
+
+                                const { temperature, summary } = data.currently;
+                                this.setState(() => ({
+                                    temperature: temperature,
+                                    city: city,
+                                    country: country,
+                                    description: summary,
+                                    error: ""
+                                }));
+                            });
                     });
             });
         }
