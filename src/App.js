@@ -33,6 +33,12 @@ export class App extends Component {
                         return response.json();
                     })
                     .then(data => {
+                        const {
+                            temperature,
+                            summary,
+                            humidity
+                        } = data.currently;
+
                         const location_api = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=29e9b0cddcf745079971e7e87bc3cc21`;
                         fetch(location_api)
                             .then(response => {
@@ -45,11 +51,13 @@ export class App extends Component {
                                     country
                                 } = location_data.results[0].components;
 
-                                const { temperature, summary } = data.currently;
                                 this.setState(() => ({
-                                    temperature: temperature,
+                                    temperature: Math.floor(
+                                        (temperature - 32) * (5 / 9)
+                                    ),
                                     city: city,
                                     country: country,
+                                    humidity: humidity,
                                     description: summary,
                                     error: ""
                                 }));
