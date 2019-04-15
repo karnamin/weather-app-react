@@ -16,8 +16,38 @@ export class App extends Component {
         error: undefined
     };
 
+    componentDidMount() {
+        let long;
+        let lat;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                console.log(position);
+                long = position.coords.longitude;
+                lat = position.coords.latitude;
+
+                const proxy = "https://cors-anywhere.herokuapp.com/";
+                const api = `${proxy}https://api.darksky.net/forecast/8ab5029215af5808294a32fdcd69c9f6/${lat},${long}`;
+                fetch(api)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        const { temperature, summary } = data.currently;
+                        this.setState(() => ({
+                            temperature: temperature,
+                            city: data.timezone,
+                            description: summary,
+                            error: ""
+                        }));
+                    });
+            });
+        }
+    }
+
     getWeather = async e => {
         e.preventDefault();
+
         const city = e.target.elements.city.value;
         const country = e.target.elements.country.value;
         const api_call = await fetch(
