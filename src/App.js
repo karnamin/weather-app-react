@@ -6,6 +6,7 @@ import Weather from "./components/Weather";
 
 const OWM_API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
 const DS_API_KEY = "8ab5029215af5808294a32fdcd69c9f6";
+const OCD_API_KEY = "29e9b0cddcf745079971e7e87bc3cc21";
 
 export class App extends Component {
     state = {
@@ -23,13 +24,13 @@ export class App extends Component {
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                console.log(position);
                 long = position.coords.longitude;
                 lat = position.coords.latitude;
 
                 const proxy = "https://cors-anywhere.herokuapp.com/";
-                const api = `${proxy}https://api.darksky.net/forecast/${DS_API_KEY}/${lat},${long}`;
-                fetch(api)
+                const dark_sky_api = `${proxy}https://api.darksky.net/forecast/${DS_API_KEY}/${lat},${long}`;
+
+                fetch(dark_sky_api)
                     .then(response => {
                         return response.json();
                     })
@@ -40,13 +41,13 @@ export class App extends Component {
                             humidity
                         } = data.currently;
 
-                        const location_api = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=29e9b0cddcf745079971e7e87bc3cc21`;
+                        const location_api = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=${OCD_API_KEY}`;
+
                         fetch(location_api)
                             .then(response => {
                                 return response.json();
                             })
                             .then(location_data => {
-                                console.log(location_data);
                                 const {
                                     city,
                                     country
