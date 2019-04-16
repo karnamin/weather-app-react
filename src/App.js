@@ -85,14 +85,26 @@ export class App extends Component {
 
         if (city && country) {
             console.log(data);
-            this.setState(() => ({
-                temperature: data.main.temp,
-                city: data.name,
-                country: data.sys.country,
-                humidity: data.main.humidity,
-                description: data.weather[0].description,
-                error: ""
-            }));
+            console.log(typeof data.cod);
+            if (data.cod === "404") {
+                this.setState(() => ({
+                    temperature: undefined,
+                    city: undefined,
+                    country: undefined,
+                    humidity: undefined,
+                    description: undefined,
+                    error: "Input doesn't match any known location!"
+                }));
+            } else {
+                this.setState(() => ({
+                    temperature: data.main.temp,
+                    city: data.name,
+                    country: data.sys.country,
+                    humidity: data.main.humidity,
+                    description: data.weather[0].description,
+                    error: ""
+                }));
+            }
         } else {
             this.setState(() => ({
                 error: "Please enter the values"
