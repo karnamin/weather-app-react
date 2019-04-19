@@ -8,11 +8,8 @@ console.log(`${process.env.OPEN_WEATHER_MAPS_KEY}`);
 console.log(typeof process.env.REACT_APP_DARK_SKY_KEY);
 
 const OWM_API_KEY = `${process.env.REACT_APP_OPEN_WEATHER_MAPS_KEY}`;
-//const OWM_API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
 const DS_API_KEY = `${process.env.REACT_APP_DARK_SKY_KEY}`;
-//const DS_API_KEY = "8ab5029215af5808294a32fdcd69c9f6";
 const OCD_API_KEY = `${process.env.REACT_APP_OPEN_CAGE_DATA_KEY}`;
-//const OCD_API_KEY = "29e9b0cddcf745079971e7e87bc3cc21";
 
 export class App extends Component {
     state = {
