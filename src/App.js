@@ -4,9 +4,15 @@ import Titles from "./components/Titles";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
 
-const OWM_API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
-const DS_API_KEY = "8ab5029215af5808294a32fdcd69c9f6";
-const OCD_API_KEY = "29e9b0cddcf745079971e7e87bc3cc21";
+console.log(`${process.env.OPEN_WEATHER_MAPS_KEY}`);
+console.log(typeof process.env.REACT_APP_DARK_SKY_KEY);
+
+const OWM_API_KEY = `${process.env.REACT_APP_OPEN_WEATHER_MAPS_KEY}`;
+//const OWM_API_KEY = "635b77ed7aa8ddd3dfbd01fa09f75735";
+const DS_API_KEY = `${process.env.REACT_APP_DARK_SKY_KEY}`;
+//const DS_API_KEY = "8ab5029215af5808294a32fdcd69c9f6";
+const OCD_API_KEY = `${process.env.REACT_APP_OPEN_CAGE_DATA_KEY}`;
+//const OCD_API_KEY = "29e9b0cddcf745079971e7e87bc3cc21";
 
 export class App extends Component {
     state = {
@@ -26,7 +32,7 @@ export class App extends Component {
             navigator.geolocation.getCurrentPosition(position => {
                 long = position.coords.longitude;
                 lat = position.coords.latitude;
-
+                console.log(long, lat);
                 const proxy = "https://cors-anywhere.herokuapp.com/";
                 const dark_sky_api = `${proxy}https://api.darksky.net/forecast/${DS_API_KEY}/${lat},${long}`;
 
